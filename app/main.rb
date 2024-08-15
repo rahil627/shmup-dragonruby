@@ -1,7 +1,43 @@
 
+require "app/sane_defaults"
+require "app/handle_input"
+
 # main game loop
 # args is a magical object that includes everything?
 def tick args
+
+  # app defaults
+  run_sane_defaults args # ruby TODO: syntax highlighting for function without () not working
+
+  run_default_app args
+
+  handle_input args
+  handle_output args
+
+# TODO: https://discord.dragonruby.org'
+
+end
+
+def init args
+  args.state.player         ||= {x: 600, y: 320, w: 80, h: 80, path: 'sprites/circle/violet.png', vx: 0, vy: 0, health: 10, cooldown: 0, score: 0}
+
+  args.state.player[:r] = args.state.player[:g] = args.state.player[:b] = (args.state.player[:health] * 25.5).clamp(0, 255)
+end
+
+def handle_output args
+  # output at the end
+  args.outputs.sprites << [args.state.player, args.state.enemies, args.state.player_bullets]
+  args.state.clear! if args.state.player[:health] < 0 # Reset the game if the player's health drops below zero
+end
+
+
+
+
+# temp
+
+def run_default_app args
+# to NOTE: if not initalized, assign
+  # " It's a nice way to embed your initialization code right next to where you need the variable."
   args.state.logo_rect ||= { x: 576,
                              y: 200,
                              w: 128,
@@ -37,48 +73,11 @@ def tick args
                             anchor_x: 0.5,
                             anchor_y: 0.5 }
 
-
-  args.outputs.sprites << { x: args.state.logo_rect.x,
-                            y: args.state.logo_rect.y,
-                            w: args.state.logo_rect.w,
-                            h: args.state.logo_rect.h,
-                            path: 'dragonruby.png',
-                            angle: Kernel.tick_count }
-
-  args.outputs.labels  << { x: 640,
-                            y: 180,
-                            text: "(use arrow keys to move the logo around)",
-                            size_px: 20,
-                            anchor_x: 0.5,
-                            anchor_y: 0.5 }
-
-  args.outputs.labels  << { x: 640,
-                            y: 80,
-                            text: 'Join the Discord Server! https://discord.dragonruby.org',
-                            size_px: 30,
-                            anchor_x: 0.5 }
-
-  if args.inputs.keyboard.left
-    args.state.logo_rect.x -= 10
-  elsif args.inputs.keyboard.right
-    args.state.logo_rect.x += 10
-  end
-
-  if args.inputs.keyboard.down
-    args.state.logo_rect.y -= 10
-  elsif args.inputs.keyboard.up
-    args.state.logo_rect.y += 10
-  end
-
-  if args.state.logo_rect.x > 1280
-    args.state.logo_rect.x = 0
-  elsif args.state.logo_rect.x < 0
-    args.state.logo_rect.x = 1280
-  end
-
-  if args.state.logo_rect.y > 720
-    args.state.logo_rect.y = 0
-  elsif args.state.logo_rect.y < 0
-    args.state.logo_rect.y = 720
-  end
 end
+
+
+
+
+
+
+
