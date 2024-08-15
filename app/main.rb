@@ -37,12 +37,6 @@ def tick args
                             anchor_x: 0.5,
                             anchor_y: 0.5 }
 
-  args.outputs.labels  << { x: 640,
-                            y: 380,
-                            text: "(you can change the code while the app is running and see the updates live)",
-                            size_px: 20,
-                            anchor_x: 0.5,
-                            anchor_y: 0.5 }
 
   args.outputs.sprites << { x: args.state.logo_rect.x,
                             y: args.state.logo_rect.y,
