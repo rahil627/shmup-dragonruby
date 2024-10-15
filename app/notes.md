@@ -2,9 +2,28 @@
 # TODO: merge in dragonruby.txt
 # TODO: try org-mode with this file!!
 
+
+# some design quotes from amir
+**"Start your game as simply as possible. One file, one method (tick).**
+
+**"A game is a body-of-state that goes through a pipeline of data transforms, and returns what should be rendered to the screen. Your single method will eventually become a collection of methods that are executed in order (it’s procedural in nature given that it’s a pipeline that transforms data/game state)."**
+
+wrt incremental evolution: **a system in it's simplest form is a function that acts on data. that's what I start with**
+
+**my "entity" is a hash. and my component is keys on that hash.**
+  - **start with this for entity architecture**
+
+**ecs in its simplest form is a function that operates on a hash with an assumed set of keys/properties**
+
+
+
+
+
+
+# docs
 single file static local docs
   - file:///C:/Users/ra/my-stuff/repos/dragonruby-windows-amd64/docs/static/docs.html
-
+  
 # philosophy
 TODO: read
 
