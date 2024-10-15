@@ -1,6 +1,11 @@
 
 
 # amir's thoughts on ECS
+**my "entity" is a hash. and my component is keys on that hash.**
+  - **start with this for entity architecture**
+
+**ecs in its simplest form is a function that operates on a hash with an assumed set of keys/properties**
+
 # https://www.reddit.com/r/ruby/comments/v87oyx/comment/ibrq1w1/?utm_source=share&utm_medium=mweb3x&utm_name=mweb3xcss&utm_term=1&utm_content=share_button
 #  - compare:
 #    - https://github.com/DragonRuby/dragonruby-game-toolkit-contrib/blob/main/samples/99_genre_platformer/gorillas_basic/app/main.rb
