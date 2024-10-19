@@ -2,6 +2,8 @@
 # TODO: merge in dragonruby.txt
 # TODO: try org-mode with this file!!
 
+# discord
+https://discord.dragonruby.org
 
 # some design quotes from amir
 **"Start your game as simply as possible. One file, one method (tick).**
@@ -18,14 +20,15 @@ wrt incremental evolution: **a system in it's simplest form is a function that a
 
 
 
-
-
 # docs
 single file static local docs
   - file:///C:/Users/ra/my-stuff/repos/dragonruby-windows-amd64/docs/static/docs.html
   
 # philosophy
 TODO: read
+
+# setup
+TODO: need to setup helix workspace, so that i can easily access samples with file picker, yet still get autocomplete via lsp (which depends on the workspace location)
 
 # repo
 1. Your public repository needs only to contain the contents of ./mygame. This approach is the cleanest and doesn't require your .gitignore to be polluted with DragonRuby specific files.
