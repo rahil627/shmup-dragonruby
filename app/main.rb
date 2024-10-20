@@ -75,11 +75,11 @@ def loop_lasers args
       
       # reflect
       l.angle = reflect_angle l.angle
-      # TODO: flip dx, dy, probably depends on the angle hit..?
+      # TODO: flip dx, dy, probably depends on the angle or axis hit..?
       dx = l.dx * -1
       dy = l.dy * -1
       
-      make_laser args, {x: l.x, y: l.y, dx: dx, dy: dy}
+      make_laser args, {x: l.head.x, y: l.head.y, dx: dx, dy: dy}
     end
 
   end
