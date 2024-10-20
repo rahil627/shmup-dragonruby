@@ -48,7 +48,20 @@ end
 # called during reflect
 def make_laser (args, a)
   l = args.state.c.laser_length ||= 20
-  
+
+  # TODO: can provide angle or vector or both?
+  # angle = 0
+  # if (a.angle) # TODO: a.angle or a['angle']?
+  #   angle = a.angle
+  #   dx = Math.sin(angle)
+  #   dy = Math.cos(angle)
+  # else
+  #   dx = a.dx
+  #   dy = a.dy
+  #   angle = vector_to_angle(a.dx, a.dy) - 90
+  # end
+
+      
   args.state.lasers << { # could avoid passing in args, but.. meh. it's neater this way!
   # {
     x:     a.x,
