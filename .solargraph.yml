@@ -1,11 +1,12 @@
 ---
 include:
 - "**/*.rb"
+# if pwd = dragonruby-windows-amd64/mygame
 - "app/*.rb"
 - "../../dragonruby-yard-doc/*.rb"
-# - "C:/Users/ra/my-stuff/repos/dragonruby-yard-doc/*.rb"
-# - "C:\\Users\\ra\\my-stuff\\repos\\dragonruby-yard-doc\\*.rb"
-# - "$home/my-stuff/repos/dragonruby-yard-doc/*.rb"
+# if pwd = dragonruby-windows-amd64/
+# - "mygame/app/*.rb"
+# - "../dragonruby-yard-doc/*.rb"
 exclude:
 - spec/**/*
 - test/**/*
