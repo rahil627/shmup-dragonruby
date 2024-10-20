@@ -74,10 +74,16 @@ def loop_lasers args
       # add a reflecting laser
       
       # reflect
-      l.angle = reflect_angle l.angle
-      # TODO: flip dx, dy, probably depends on the angle or axis hit..?
-      dx = l.dx * -1
-      dy = l.dy * -1
+      # angle vs vector impl
+      # l.angle = reflect_angle l.angle
+
+      dx = l.dx
+      dy = l.dy
+      if off_screen_or_on_the_edge_left_right? l.head
+        dx *= -1
+      else #if off_screen_or_on_the_edge_top_bottom? l
+        dy *= -1
+      end
       
       make_laser args, {x: l.head.x, y: l.head.y, dx: dx, dy: dy}
     end
@@ -93,6 +99,14 @@ end
 # "For what it’s worth, you could implement this behavior yourself — instead of calling “delete”, you could set obj.garbage = true. After your iteration, then you only need array.reject!(&:garbage) to clean up." - pvande
 def take_out_the_trash args
   args.state.lasers.reject!(&:trash) # TODO: learn &:key
+end
+
+def off_screen_or_on_the_edge_top_bottom? e
+  e.y <= 0 - e.h || e.y >= 720 + e.h
+end
+
+def off_screen_or_on_the_edge_left_right? e
+  e.x <= 0 - e.w || e.x >= 1280 + e.w
 end
 
 def off_screen_or_on_the_edge? e
