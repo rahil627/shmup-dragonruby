@@ -7,8 +7,8 @@ return if args.state.player[:cooldown] > 0
 
 
 # functions
-def function args1 not2
-  # need to add parenthesis for two or more arguments
+def function args1, not2
+  # don't foreget the comma!
 end
 
 def f(arg) end
@@ -33,6 +33,9 @@ puts add_one_to(3) # "conventional"
 puts(add_one_to 3) # outer
 puts(add_one_to(3)) # all
   
+# method chaining
+player.x = player.x.add(dx).clamp(0)
+  # there are many methods added to objects to allow expressing things this way
 
 
 
@@ -50,6 +53,17 @@ An Array is an ordered, integer-indexed collection of objects, called elements. 
 *array
   # These are splat operators, they'll deconstruct your hash/array into arguments for a method. 
 
+# destructure
+array = [10, 20]
+x, y = array # destructuring here is position based
+
+# using spread (reverse splat?) for remaining
+player = [5, 5, "Player 1", 5, 5] # x, y, name, w, h
+player_x, player_y, name, *player_size = player # 5, 5, Player 1, [5, 5]
+
+# splat operator
+
+## for args
 target = { x: 50, y: 50 }
 def move_to(x:, y:)
   # moves player to x, y
@@ -64,7 +78,6 @@ end
 move_to(*target)
   # array splat
 
-
 old_hash = { a: 1, b: 2 }
 hash = { a: 5, **old_hash, b: 6 } # => { a: 1, b: 6 }
   # args replaced by order of precedence
@@ -74,6 +87,13 @@ array = [ 1, 2, *old_array, 5, 6] # => [1, 2, 2, 3, 4, 5, 5, 6]
   # not for arrays tho..
 
 "hashsplat is useful for moments when ~'a lot of the things i want to output are similar'"
+
+
+
+enemies = [{ type: "goomba", alive: true }, { type: "koopa", alive: true }, { type: "goomba", alive: false }, { type: "koopa", alive: true }]
+alive_enemies, dead_enemies = enemies.partition(&:alive) # splits into alive group and the rest
+
+
 
 ## hashes
 screen ||= {0, 0, 720, 1280} # error
@@ -104,26 +124,27 @@ args.state.laser.trash ||= true
 
 # loops
 # loops are quite different..
-3.times do |i|
-  puts i
-end
-
 array = ["a", "b", "c", "d"]
 array.each do |char|
   puts char
 end  
 
-array = ["a", "b", "c", "d"]
 array.each do |char, i|
   puts "index #{i}: #{char}"
 end
 
-# puts "** INFO: range block exclusive (three dots)"
-(0...3).each do |i|
+3.times do |i|
   puts i
 end
 
-# puts "** INFO: range block inclusive (two dots)"
+(0...4).each do |i|
+  puts i
+end
+  # range block exclusive (three dots), excluding last number
+  # 0-3, 4 matches the number of elements in an array
+
 (0..3).each do |i|
   puts i
 end
+  # range block inclusive (two dots), including last number
+  # 0-3
