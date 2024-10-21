@@ -36,7 +36,7 @@ def init_once args
 def handle_output args
     args.outputs.background_color = [128, 0, 128]
   # output at the end
-    args.outputs.sprites << [args.state.player, args.state.enemies, args.state.lasers ] # args.state.lasers.head 
+    args.outputs.sprites << [args.state.player, args.state.enemies, args.state.lasers ] # TODO: args.state.lasers.head 
 
   args.state.clear! if args.state.player[:health] < 0 # Reset the game if the player's health drops below zero
 end
@@ -54,7 +54,7 @@ def loop_lasers args
     s = args.state.c.laser_speed ||= 1 # speed, 1/720 per tick..?
 
     # extend
-    l.h += s 
+    l.h += s
 
     # calculate from angle and length
     # distance = l.h
@@ -77,6 +77,7 @@ def loop_lasers args
       # angle vs vector impl
       # l.angle = reflect_angle l.angle
 
+      # vector is easier to handle here..
       dx = l.dx
       dy = l.dy
       if off_screen_or_on_the_edge_left_right? l.head
@@ -91,10 +92,9 @@ def loop_lasers args
   end
 end
 
-def reflect_angle angle
-  180 - angle
-end
-
+# def reflect_angle angle
+#   180 - angle
+# end
   
 # "For what it’s worth, you could implement this behavior yourself — instead of calling “delete”, you could set obj.garbage = true. After your iteration, then you only need array.reject!(&:garbage) to clean up." - pvande
 def take_out_the_trash args
