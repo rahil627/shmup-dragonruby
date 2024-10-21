@@ -1,4 +1,9 @@
 
+
+player[:x] = player[:x].add(dx).clamp(0)
+  # "In DR specifically, Hashes have access semantics that look more like JavaScript objects: you can access (Symbol) keys either with square brackets or dot-notation. The rationale for this is that it makes the code change smaller when migrating from Hashes to Objects, with the bonus that dot-notation can actually be faster than the equivalent bracketed lookup." - pvande
+
+
 args.state
   # global state
   # use console to see what's inside interactively
