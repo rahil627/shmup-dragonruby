@@ -46,8 +46,8 @@ def fire_player args
 end
 
 # called during reflect
-def make_laser (args, a)
-  l = args.state.c.laser_length ||= 20
+def make_laser args, a
+  w = args.state.c.laser_width ||= 20
 
   # TODO: can provide angle or vector or both?
   # angle = 0
@@ -63,11 +63,10 @@ def make_laser (args, a)
 
       
   args.state.lasers << { # could avoid passing in args, but.. meh. it's neater this way!
-  # {
     x:     a.x,
     y:     a.y,
-    w:     l,
-    h:     l,
+    w:     w,
+    h:     1, # 0 might cause multiplication problem..
     path: :pixel,
     angle: vector_to_angle(a.dx, a.dy) - 90,
       # Rotation of the sprite in degrees (default value is 0). Rotation occurs around the center of the sprite. The point of rotation can be changed using angle_anchor_x and angle_anchor_y.
@@ -100,6 +99,8 @@ end
 # TODO: should use left_right_perc and up_down_perc, which conveniently combines wasd/arrows/analog
 # TEMP: use WASD
 def move_directional_vector args
+
+  s = args.state.c.player_move_speed ||= 0.7071
   # dx = args.inputs.left_right_perc # handles wasd, arrows, analog sticks
   # dy = args.inputs.up_down_perc
   
@@ -110,8 +111,8 @@ def move_directional_vector args
   dy += 1 if args.inputs.keyboard.w
   dy -= 1 if args.inputs.keyboard.s
   if dx != 0 && dy != 0
-    dx *= 0.7071
-    dy *= 0.7071
+    dx *= s
+    dy *= s
   end
   # args.state.in.move_vector ||= [dx, dy]
   [dx, dy]
@@ -121,6 +122,8 @@ end
 # Custom function for getting a directional vector just for shooting
 # TEMP: use arrow keys
 def shoot_directional_vector args
+
+  s = args.state.c.player_shot_speed ||= 0.7071
   dx = args.inputs.left_right_directional # arrows, d-pad
   dy = args.inputs.up_down_directional
   
@@ -131,8 +134,8 @@ def shoot_directional_vector args
   # dy += 1 if args.inputs.keyboard.key_down.up || args.inputs.keyboard.key_held.up
   # dy -= 1 if args.inputs.keyboard.key_down.down || args.inputs.keyboard.key_held.down
   if dx != 0 && dy != 0
-    dx *= 0.7071
-    dy *= 0.7071
+    dx *= s
+    dy *= s
   end
   # args.state.in.shoot_vector ||= [dx, dy]
   [dx, dy]
