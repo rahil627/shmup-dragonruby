@@ -30,6 +30,12 @@ TODO: read
 # setup
 TODO: need to setup helix workspace, so that i can easily access samples with file picker, yet still get autocomplete via lsp (which depends on the workspace location)
 
+# lsp
+install the solargraph gem
+get the dr yard docs repo
+in mygame folder, run `solargraph config`
+set up the relative directory to the yard docs repo and app folder
+
 # repo
 1. Your public repository needs only to contain the contents of ./mygame. This approach is the cleanest and doesn't require your .gitignore to be polluted with DragonRuby specific files.
 2. edit .gitignore (see docs)
@@ -50,7 +56,12 @@ args.outputs
 args.inputs
 
 args.state
+args.state.player[x:]
+args.state.player.x
   - a place you can hang your own data. It's an open data structure that allows you to define properties that are arbitrarily nested. You don't need to define any kind of class.
+  - it seems to be nested hashes
+  - dot notation has the benefit of being easy to refactor if player evolves into a class
+  - standard hash notation currently has the benefit of auto-complete working
   
 args.geometry
 

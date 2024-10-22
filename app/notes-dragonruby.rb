@@ -1,4 +1,25 @@
 
+# LSP
+$args. not args.
+  # triggers auto-complete
+  # **all of DR's functions are here**
+
+$args.gtk.
+GTK.
+  # this also works, but then you'd have to remember the name of the classes
+
+args.state.player[:
+  # triggers auto-complete
+  # shows all keys for the current hash, then arts.inputs, then args.outputs
+
+# @params args [GTK::Args] # this tells solargraph a type hint
+def tick args
+  args.
+    # triggers auto-complete
+    # but at the moment, it only works within the function, and doesn't propogate the call stack
+end
+  
+  
 
 player[:x] = player[:x].add(dx).clamp(0)
   # "In DR specifically, Hashes have access semantics that look more like JavaScript objects: you can access (Symbol) keys either with square brackets or dot-notation. The rationale for this is that it makes the code change smaller when migrating from Hashes to Objects, with the bonus that dot-notation can actually be faster than the equivalent bracketed lookup." - pvande
