@@ -7,8 +7,9 @@ require "app/handle_input"
 def tick args
   run_default_app args # TEMP
   
-  init_once args
   run_sane_defaults args
+  # return if args.state.paused # comment this out to remove pause, and instead can use the console to pause it TODO: breaks the game.. :/
+  init_once args
   handle_input args # TODO: module vs file?
   handle_logic args
   take_out_the_trash args
