@@ -3,14 +3,16 @@
 # inputs don't change much, so put it in another file
 # @param args [GTK::Args]
 def handle_input args
+  store_inputs args
+  
   move_player args
-  fire_player args
+  shoot_player args
 end
 
 # from twinstick sample
 def move_player args
   s = args.state.player[:s] ||= 0.75 # speed
-  dx, dy                 = move_directional_vector args
+  dx, dy                 = args.state.in.move_vector
   
   # Take the weighted average of the old velocities and the desired velocities.
   # Since move_directional_vector returns values between -1 and 1,
@@ -26,14 +28,14 @@ def move_player args
 end
 
 
-def fire_player args
+def shoot_player args
   args.state.player[:cooldown] -= 1
   return if args.state.player[:cooldown] > 0
   
   cooldown_length = args.state.player[:cooldown_length] ||= 60 # 1/second
   
-  dx, dy = shoot_directional_vector args # Get the bullet velocity
-  return if dx == 0 && dy == 0 # If the velocity is zero, the player doesn't want to fire. Therefore, we just return early.
+  dx, dy = args.state.in.shoot_vector
+  return if dx == 0 && dy == 0 # if no input, return early
 
   # add a new bullet to the list of player bullets
   w = args.state.player.w
@@ -98,10 +100,19 @@ end
 
 # INPUTS HANDLED HERE
 
-# Custom function for getting a directional vector just for movement
+# store all inputs into global state
+# also makes testing inputs easy
+def store_inputs args
+  args.state.in.shoot_vector ||= [0, 0]
+  args.state.in.move_vector ||= [0, 0]
+  args.state.in.shoot_vector = (get_shoot_vector args)
+  args.state.in.move_vector = (get_move_vector args)
+end
+
+# stores the directional vector of movement input into args.state.in.move_vector
 # TODO: should use left_right_perc and up_down_perc, which conveniently combines wasd/arrows/analog
 # TEMP: use WASD
-def move_directional_vector args
+def get_move_vector args
 
   s = args.state.c.player_move_speed ||= 0.7071
   # dx = args.inputs.left_right_perc # handles wasd, arrows, analog sticks
@@ -117,14 +128,13 @@ def move_directional_vector args
     dx *= s
     dy *= s
   end
-  # args.state.in.move_vector ||= [dx, dy]
   [dx, dy]
   # NOTE: magically can do: dx, dy = move_directional_vector
 end
 
-# Custom function for getting a directional vector just for shooting
+# stores the directional vector of shoot input into args.state.in.shoot_vector
 # TEMP: use arrow keys
-def shoot_directional_vector args
+def get_shoot_vector args
 
   s = args.state.c.player_shot_speed ||= 0.7071
   dx = args.inputs.left_right_directional # arrows, d-pad
@@ -140,6 +150,5 @@ def shoot_directional_vector args
     dx *= s
     dy *= s
   end
-  # args.state.in.shoot_vector ||= [dx, dy]
   [dx, dy]
 end

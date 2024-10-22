@@ -11,6 +11,8 @@ def tick args
   # return if args.state.paused # comment this out to remove pause, and instead can use the console to pause it TODO: breaks the game.. :/
   init_once args
   handle_input args # TODO: module vs file?
+    # move
+    # shoot
   handle_logic args
   take_out_the_trash args
   handle_output args # vs render
@@ -44,13 +46,18 @@ def handle_output args
 end
 
 def handle_logic args
-  # TODO: loop through each entity vs seperate loops by logic: move, collision, etc.
-  # def should seperate by logic..
-  loop_lasers args
+  # store_inputs
+  # move_players
+  # shoot_players
+  handle_lasers args
+    # extend
+    # reflect
+      # add new laser
 end
 
+
 # TODO: surely exists somewhere..
-def loop_lasers args
+def handle_lasers args
   args.state.lasers.each do |l|
 
     s = args.state.c.laser_speed ||= 1 # speed, 1/720 per tick..?
