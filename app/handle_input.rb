@@ -1,7 +1,7 @@
 
 
 # inputs don't change much, so put it in another file
-
+# @param args [GTK::Args]
 def handle_input args
   move_player args
   fire_player args
@@ -9,13 +9,14 @@ end
 
 # from twinstick sample
 def move_player args
-  # Get the currently held direction.
+  s = args.state.player[:s] ||= 0.75 # speed
   dx, dy                 = move_directional_vector args
+  
   # Take the weighted average of the old velocities and the desired velocities.
   # Since move_directional_vector returns values between -1 and 1,
   #   and we want to limit the speed to 7.5, we multiply dx and dy by 7.5*0.1 to get 0.75
-  args.state.player[:vx] = args.state.player[:vx] * 0.9 + dx * 0.75
-  args.state.player[:vy] = args.state.player[:vy] * 0.9 + dy * 0.75
+  args.state.player[:vx] = args.state.player[:vx] * 0.9 + dx * s
+  args.state.player[:vy] = args.state.player[:vy] * 0.9 + dy * s
   # Move the player
   args.state.player.x    += args.state.player[:vx]
   args.state.player.y    += args.state.player[:vy]
@@ -27,14 +28,14 @@ end
 
 def fire_player args
   args.state.player[:cooldown] -= 1
-  
   return if args.state.player[:cooldown] > 0
+  
+  cooldown_length = args.state.player[:cooldown_length] ||= 60 # 1/second
   
   dx, dy = shoot_directional_vector args # Get the bullet velocity
   return if dx == 0 && dy == 0 # If the velocity is zero, the player doesn't want to fire. Therefore, we just return early.
 
-  # Add a new bullet to the list of player bullets.
-  puts "fire_player"
+  # add a new bullet to the list of player bullets
   x = args.state.player.x + args.state.player.w * dx
   y = args.state.player.y + args.state.player.h * dy
   make_laser args, {x: x, y: y, dx: dx, dy: dy}
@@ -42,10 +43,10 @@ def fire_player args
   # vs seperate sprite
   # args.state.laser_heads << { x: x, y: y, w: 5, h: 5, path: 'sprites/circle/green.png', angle: vector_to_angle(dx, dy) }
 
-  args.state.player[:cooldown] = 30 # Reset the cooldown
+  args.state.player[:cooldown] = cooldown_length # reset the cooldown
 end
 
-# called during reflect
+# NOTE: called during reflect
 def make_laser args, a
   w = args.state.c.laser_width ||= 20
 
@@ -60,8 +61,7 @@ def make_laser args, a
   #   dy = a.dy
   #   angle = vector_to_angle(a.dx, a.dy) - 90
   # end
-
-      
+   
   args.state.lasers << { # could avoid passing in args, but.. meh. it's neater this way!
     x:     a.x,
     y:     a.y,
@@ -81,7 +81,7 @@ def make_laser args, a
     trash: false,
     dx: a.dx, # more convenient than angle..
     dy: a.dy,
-    head: { x: a.x, y: a.y, w: 5, h: 5, path: :pixel, r: 0, g: 255, b: 0}, # TODO: composition..? TODO: learn array vs hash
+    head: { x: a.x, y: a.y, w: 5, h: 5, path: :pixel, r: 0, g: 255, b: 0}, # composition..??
   }
 end
 
