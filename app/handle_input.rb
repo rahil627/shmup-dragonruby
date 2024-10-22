@@ -9,46 +9,55 @@ def handle_input args
   shoot_player args
 end
 
-# from twinstick sample
+# sources: started with twinstick sample
 def move_player args
-  s = args.state.player[:s] ||= 0.75 # speed
-  dx, dy                 = args.state.in.move_vector
+  p = args.state.player
+
+  s = p[:s] ||= 0.75 # speed
+  dx, dy = args.state.in.move_vector
+  
+  # TODO: use anchor_x/y and angle_anchor_x to turn sprite
+  p[:angle] = vector_to_angle(dx, dy) - 90
   
   # Take the weighted average of the old velocities and the desired velocities.
   # Since move_directional_vector returns values between -1 and 1,
   #   and we want to limit the speed to 7.5, we multiply dx and dy by 7.5*0.1 to get 0.75
-  args.state.player[:vx] = args.state.player[:vx] * 0.9 + dx * s
-  args.state.player[:vy] = args.state.player[:vy] * 0.9 + dy * s
-  # Move the player
-  args.state.player.x    += args.state.player[:vx]
-  args.state.player.y    += args.state.player[:vy]
-  # If the player is about to go out of bounds, put them back in bounds.
-  args.state.player.x    = args.state.player.x.clamp(0, 1201)
-  args.state.player.y    = args.state.player.y.clamp(0, 640)
+  p[:vx] = p[:vx] * 0.9 + dx * s
+  p[:vy] = p[:vy] * 0.9 + dy * s
+
+  # move
+  p.x += p[:vx]
+  p.y += p[:vy]
+
+  # bound to screen
+  p.x = p.x.clamp(0, 1201)
+  p.y = p.y.clamp(0, 640)
 end
 
 
 def shoot_player args
-  args.state.player[:cooldown] -= 1
-  return if args.state.player[:cooldown] > 0
+  p = args.state.player
+
+  p[:cooldown] -= 1
+  return if p[:cooldown] > 0
   
-  cooldown_length = args.state.player[:cooldown_length] ||= 60 # 1/second
+  cooldown_length = p[:cooldown_length] ||= 60 # 1/second
   
   dx, dy = args.state.in.shoot_vector
   return if dx == 0 and dy == 0 # if no input, return early
 
   # add a new bullet to the list of player bullets
-  w = args.state.player.w
-  h = args.state.player.h
+  w = p.w
+  h = p.h
 
-  x = args.state.player.x + w/2 + w/2 * dx
-  y = args.state.player.y + h/2 + h/2 * dy
+  x = p.x + w/2 + w/2 * dx
+  y = p.y + h/2 + h/2 * dy
   make_laser args, {x: x, y: y, dx: dx, dy: dy}
   
   # vs seperate sprite
   # args.state.laser_heads << { x: x, y: y, w: 5, h: 5, path: 'sprites/circle/green.png', angle: vector_to_angle(dx, dy) }
 
-  args.state.player[:cooldown] = cooldown_length # reset the cooldown
+  p[:cooldown] = cooldown_length # reset the cooldown
 end
 
 # NOTE: called during reflect
@@ -111,6 +120,7 @@ end
 
 # stores the directional vector of movement input into args.state.in.move_vector
 # TODO: should use left_right_perc and up_down_perc, which conveniently combines wasd/arrows/analog
+# TODO: multiple controllers, see $args.inputs.controllers
 # TEMP: use WASD
 def get_move_vector args
 

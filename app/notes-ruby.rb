@@ -4,6 +4,18 @@
 return if args.state.player[:cooldown] > 0
   # statement if condition
 
+# WARN: the only values that can fail conditional checks are false and nil
+
+
+||=
+  # Whatever is on the left OR assign to the right
+
+# WARN: don't use booleans with ||=
+||= false
+  # will never work but that's usually ok since what was in the variable before is nil which is as good as false in most cases
+||= true
+  # but the real trap is ||= true which will always overwrite the value with true not only the first time 
+  # since a ||= b is just  a = (a || b), actually a || (a = b) (slightly different) which in case of true will never end well 😛  because false || true will always be true 😛
 
 
 # functions

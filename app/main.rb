@@ -20,22 +20,29 @@ end
 
 def init_once args
 
+  # return if args.state.c.init # empty hash returns true
+  # args.state.c.init ||= true
+  
   # just note some state data here
   # args.state.c = constants
-
-  # TODO: should only do once
 
   # TODO: surely somehwre..
   # args.state.screen ||= {x: 0, y: 0, h: 720, w: 1280}
 
+  args.state.players ||= []
+  args.state.lasers ||= []
+    # arrays of hashes
+
+  
   # NOTE: because this is run every tick, use ||=
   args.state.player ||= {x: 600, y: 320, w: 80, h: 80, path: 'sprites/circle/violet.png', vx: 0, vy: 0, trash: false, health: 10, cooldown: 0, score: 0}
 
-  args.state.player[:r] = args.state.player[:g] = args.state.player[:b] = (args.state.player[:health] * 25.5).clamp(0, 255)
+  p = args.state.player # must do after lazy init
+  p[:r] = p[:g] = p[:b] = (p[:health] * 25.5).clamp(0, 255)
 
-  # TODO: args.state.players ||= []
-  args.state.lasers ||= [] # TODO: not {}??
-  end
+  # args.state.players << p # TODO: TEMP, single player
+
+end
 
 def handle_output args
     args.outputs.background_color = [128, 0, 128]
@@ -53,7 +60,7 @@ def handle_logic args
     # extend
     # reflect
       # add new laser
-    # TODO:
+  # TODO:
   # check_laser_collisions args
     # do after reflect and shoot_players, 'cause they add new lasers
 end
