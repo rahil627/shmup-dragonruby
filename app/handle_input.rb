@@ -35,7 +35,7 @@ def shoot_player args
   cooldown_length = args.state.player[:cooldown_length] ||= 60 # 1/second
   
   dx, dy = args.state.in.shoot_vector
-  return if dx == 0 && dy == 0 # if no input, return early
+  return if dx == 0 and dy == 0 # if no input, return early
 
   # add a new bullet to the list of player bullets
   w = args.state.player.w
@@ -124,7 +124,7 @@ def get_move_vector args
   dy = 0
   dy += 1 if args.inputs.keyboard.w
   dy -= 1 if args.inputs.keyboard.s
-  if dx != 0 && dy != 0
+  if dx != 0 and dy != 0
     dx *= s
     dy *= s
   end
@@ -146,7 +146,7 @@ def get_shoot_vector args
   # dy = 0
   # dy += 1 if args.inputs.keyboard.key_down.up || args.inputs.keyboard.key_held.up
   # dy -= 1 if args.inputs.keyboard.key_down.down || args.inputs.keyboard.key_held.down
-  if dx != 0 && dy != 0
+  if dx != 0 and dy != 0
     dx *= s
     dy *= s
   end
