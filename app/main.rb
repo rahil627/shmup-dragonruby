@@ -2,10 +2,8 @@
 require "app/sane_defaults"
 require "app/handle_input"
 
-# args.state.c = constants
-
-# @params args [GTK::Args]
 # main game loop
+# @param args [GTK::Args]
 def tick args
   run_default_app args # TEMP
   
@@ -14,10 +12,13 @@ def tick args
   handle_input args # TODO: module vs file?
   handle_logic args
   take_out_the_trash args
-  handle_output args
+  handle_output args # vs render
 end
 
 def init_once args
+
+  # just note some state data here
+  # args.state.c = constants
 
   # TODO: should only do once
 
