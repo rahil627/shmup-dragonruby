@@ -29,12 +29,12 @@ def init_once args
   # args.state.screen ||= {x: 0, y: 0, h: 720, w: 1280}
 
   # NOTE: because this is run every tick, use ||=
-  args.state.player ||= {x: 600, y: 320, w: 80, h: 80, path: 'sprites/circle/violet.png', vx: 0, vy: 0, health: 10, cooldown: 0, score: 0}
+  args.state.player ||= {x: 600, y: 320, w: 80, h: 80, path: 'sprites/circle/violet.png', vx: 0, vy: 0, trash: false, health: 10, cooldown: 0, score: 0}
 
   args.state.player[:r] = args.state.player[:g] = args.state.player[:b] = (args.state.player[:health] * 25.5).clamp(0, 255)
 
   # TODO: args.state.players ||= []
-  args.state.lasers ||= []
+  args.state.lasers ||= [] # TODO: not {}??
   end
 
 def handle_output args
@@ -53,6 +53,25 @@ def handle_logic args
     # extend
     # reflect
       # add new laser
+    # TODO:
+  # check_laser_collisions args
+    # do after reflect and shoot_players, 'cause they add new lasers
+end
+
+def check_laser_collisions args
+  # TODO: incomplete
+  args.state.lasers.each do |l| # loop players or lasers?
+    # args.state.enemies.reject! do |enemy| # TODO: reject, but no conditional..?
+    # args.state.player_bullets.any? do |bullet| # TODO: LEARN: any, no conditional
+    # TODO: should center sprite anchors, especially player
+      # Check if enemy and player are within 20 pixels of each other (i.e. overlapping)
+    if 1000 > (l.x - args.state.player.x) ** 2 + (l.y - args.state.player.y) ** 2
+      # l.trash ||= true
+        # nahhh, keep laser
+      # kill player
+      args.state.player.trash ||= true
+    end
+  end
 end
 
 
@@ -108,6 +127,8 @@ end
 # "For what it’s worth, you could implement this behavior yourself — instead of calling “delete”, you could set obj.garbage = true. After your iteration, then you only need array.reject!(&:garbage) to clean up." - pvande
 def take_out_the_trash args
   args.state.lasers.reject!(&:trash) # TODO: learn &:key
+  # args.state.players.reject!(&:trash) # TODO: learn &:key
+  # args.state.player = nil # will crash on output
 end
 
 def off_screen_or_on_the_edge_top_bottom? e

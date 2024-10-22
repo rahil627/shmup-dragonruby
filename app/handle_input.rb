@@ -83,7 +83,7 @@ def make_laser args, a
 
     # extra fields
     # player: player_id
-    trash: false,
+    trash: false, # not necessary, as ||= and {}.reject! will work without it
     dx: a.dx, # more convenient than angle..
     dy: a.dy,
     head: { x: a.x, y: a.y, w: 5, h: 5, path: :pixel, r: 0, g: 255, b: 0}, # composition..??
