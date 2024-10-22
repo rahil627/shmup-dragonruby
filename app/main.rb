@@ -40,9 +40,46 @@ def init_once args
   p = args.state.player # must do after lazy init
   p[:r] = p[:g] = p[:b] = (p[:health] * 25.5).clamp(0, 255)
 
-  # args.state.players << p # TODO: TEMP, single player
+  # TODO: before this, make sure to init once
+  # args.state.players << [make_player1, make_player2] # TODO: TEMP, single player
 
 end
+
+def make_player1
+  make_player x: 400,
+           y: 320.randomize(:sign, :ratio),
+           angle: 180,
+           path: 'sprites/circle/violet.png'
+           # color: { r: 255, g: 90, b: 90 }
+end
+
+def make_player2
+  make_player x: 800,
+           y: 250.randomize(:sign, :ratio),
+           angle: 0,
+           path: 'sprites/circle/green.png'
+           # color: { r: 110, g: 140, b: 255 }
+end
+
+def make_player x:, y:, angle:, path:; #, color:;
+  # dead: false,
+  # color: color,
+  # created_at: Kernel.tick_count,
+  {x: x,
+   y: y,
+   w: 80,
+   h: 80,
+   # path: 'sprites/circle/violet.png',
+   # a: 255,
+   angle: angle,
+   vx: 0,
+   vy: 0,
+   trash: false, # different from dead?
+   cooldown: 0,
+   health: 10,
+   score: 0 }
+end
+
 
 def handle_output args
     args.outputs.background_color = [128, 0, 128]
