@@ -36,8 +36,11 @@ def fire_player args
   return if dx == 0 && dy == 0 # If the velocity is zero, the player doesn't want to fire. Therefore, we just return early.
 
   # add a new bullet to the list of player bullets
-  x = args.state.player.x + args.state.player.w * dx
-  y = args.state.player.y + args.state.player.h * dy
+  w = args.state.player.w
+  h = args.state.player.h
+
+  x = args.state.player.x + w/2 + w/2 * dx
+  y = args.state.player.y + h/2 + h/2 * dy
   make_laser args, {x: x, y: y, dx: dx, dy: dy}
   
   # vs seperate sprite
