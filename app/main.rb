@@ -1,6 +1,6 @@
 
-require "app/sane_defaults" # try require_relative
-require "app/handle_input"
+require_relative "defaults"
+require_relative "input"
 
 def tick args
   $game ||= Game.new
