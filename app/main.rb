@@ -39,8 +39,9 @@ def init
   # just note some state data here
   # args.state.c = constants
 
-  # TODO: surely somehwre..
-  # args.state.screen ||= {x: 0, y: 0, h: 720, w: 1280}
+  # TODO: surely somewhere..
+  # just kept using hard-coded ints for now..
+  # args.state.screen = {x: 0, y: 0, h: 720, w: 1280}
 
   args.state.players = []
   args.state.lasers = []
@@ -99,7 +100,7 @@ def handle_output
   # output at the end
   args.outputs.background_color = [128, 0, 128]
 
-  args.outputs.sprites << [args.state.players, args.state.lasers ]
+  args.outputs.sprites << [args.state.players, args.state.lasers]
   
   args.state.lasers.each do |l|
     args.outputs.sprites << l.head
