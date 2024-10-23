@@ -20,8 +20,9 @@ end
 
 def init_once args
 
-  # return if args.state.c.init # empty hash returns true
-  # args.state.c.init ||= true
+  return if args.state.c.init == 1
+  puts "init"
+  args.state.c.init = 1
   
   # just note some state data here
   # args.state.c = constants
@@ -29,19 +30,19 @@ def init_once args
   # TODO: surely somehwre..
   # args.state.screen ||= {x: 0, y: 0, h: 720, w: 1280}
 
-  args.state.players ||= []
-  args.state.lasers ||= []
+  args.state.players = []
+  args.state.lasers = []
     # arrays of hashes
 
+
+  # NOTE: move this to update player
+  # p = args.state.player # must do after lazy init
+  # p[:r] = p[:g] = p[:b] = (p[:health] * 25.5).clamp(0, 255)
   
-  # NOTE: because this is run every tick, use ||=
-  args.state.player ||= {x: 600, y: 320, w: 80, h: 80, path: 'sprites/circle/violet.png', vx: 0, vy: 0, trash: false, health: 10, cooldown: 0, score: 0}
+  args.state.players << make_player1
+  args.state.players << make_player2
 
-  p = args.state.player # must do after lazy init
-  p[:r] = p[:g] = p[:b] = (p[:health] * 25.5).clamp(0, 255)
-
-  # TODO: before this, make sure to init once
-  # args.state.players << [make_player1, make_player2] # TODO: TEMP, single player
+  args.state.player = args.state.players[0] # TODO: TEMP, until refactored
 
 end
 
