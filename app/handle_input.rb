@@ -50,8 +50,8 @@ def shoot_player args
   w = p.w
   h = p.h
 
-  x = p.x + w/2 + w/2 * dx
-  y = p.y + h/2 + h/2 * dy
+  x = p.x + w/2 * dx
+  y = p.y + h/2 * dy
   make_laser args, {x: x, y: y, dx: dx, dy: dy}
   
   # vs seperate sprite
@@ -79,13 +79,15 @@ def make_laser args, a
   args.state.lasers << { # could avoid passing in args, but.. meh. it's neater this way!
     x:     a.x,
     y:     a.y,
+    anchor_x: 0.5, # center of width of laser
+    # anchor_y: 0.5,
     w:     w,
     h:     1, # 0 might cause multiplication problem..
     path: :pixel,
     angle: vector_to_angle(a.dx, a.dy) - 90,
       # Rotation of the sprite in degrees (default value is 0). Rotation occurs around the center of the sprite. The point of rotation can be changed using angle_anchor_x and angle_anchor_y.
-    # angle_anchor_x: 0,
-    angle_anchor_y: 0,
+    # angle_anchor_x: 0.5,
+    angle_anchor_y: 0, # don't quite remember.. bottom of length of laser?
     r:     255 * rand, g: 255 * rand, b: 255 * rand, # white by default
     # vx:    10 * dx + args.state.player[:vx] / 7.5,
     # vy: 10 * dy + args.state.player[:vy] / 7.5, # Factor in a bit of the player's velocity

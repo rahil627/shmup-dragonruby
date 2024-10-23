@@ -73,9 +73,12 @@ def make_player x:, y:, angle:, path:; #, color:;
    # path: 'sprites/circle/violet.png',
    # a: 255,
    angle: angle,
+   anchor_x: 0.5,
+   anchor_y: 0.5,
    vx: 0,
    vy: 0,
-   trash: false, # different from dead?
+   trash: false, # for garbage collection
+   # dead?
    cooldown: 0,
    health: 10,
    score: 0 }
