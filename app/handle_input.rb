@@ -67,7 +67,7 @@ def make_laser args, a
 end
 
 # returns entity hash
-def laser args, a
+def laser args, a # hash with x, y, dx, dy
   w = args.state.c.laser_width ||= 20
   
   # TODO: can provide angle or vector or both?

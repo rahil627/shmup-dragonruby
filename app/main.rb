@@ -1,5 +1,5 @@
 
-require "app/sane_defaults"
+require "app/sane_defaults" # try require_relative
 require "app/handle_input"
 
 # main game loop
