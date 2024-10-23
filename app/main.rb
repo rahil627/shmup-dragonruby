@@ -98,11 +98,18 @@ end
 
 
 def handle_output
-    args.outputs.background_color = [128, 0, 128]
   # output at the end
-    args.outputs.sprites << [args.state.player, args.state.enemies, args.state.lasers ] # TODO: args.state.lasers.head 
+  args.outputs.background_color = [128, 0, 128]
 
-  args.state.clear! if args.state.player[:health] < 0 # Reset the game if the player's health drops below zero
+  args.outputs.sprites << [args.state.player, args.state.enemies, args.state.lasers ]
+  
+  args.state.lasers.each do |l|
+    args.outputs.sprites << l.head
+  end
+
+  
+  # from sample
+  # args.state.clear! if args.state.player[:health] < 0 # Reset the game if the player's health drops below zero
 end
 
 def handle_logic
