@@ -60,7 +60,7 @@ def make_player1
   make_player x: 400,
            y: 320.randomize(:sign, :ratio),
            angle: 180,
-           path: 'sprites/circle/violet.png' # TODO: this broke after refactoring out of make_laser
+           path: 'sprites/circle/violet.png'
            # color: { r: 255, g: 90, b: 90 }
 end
 
@@ -80,7 +80,7 @@ def make_player x:, y:, angle:, path:; #, color:;
    y: y,
    w: 80,
    h: 80,
-   # path: 'sprites/circle/violet.png',
+   path: path,
    # a: 255,
    angle: angle,
    anchor_x: 0.5,
