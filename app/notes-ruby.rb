@@ -4,8 +4,12 @@
 return if args.state.player[:cooldown] > 0
   # statement if condition
 
+return unless args.state.player[:cooldown] <= 0
+  # if not
+
 # WARN: the only values that can fail conditional checks are false and nil
 
+return if args.state.c.init # returns true?
 
 ||=
   # Whatever is on the left OR assign to the right
