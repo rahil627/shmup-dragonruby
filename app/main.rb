@@ -13,7 +13,7 @@ class Game
 attr_gtk
 
 include Input
-include Defaults
+include Defaults # plural?
 
 # main game loop
 # @param args [GTK::Args]
@@ -22,8 +22,8 @@ def tick
   init if Kernel.tick_count.zero? # thanks to pvande
   return if pause_because_unfocused? # from defaults module
   handle_input # from input module
-    # move
-    # shoot
+    # move_player
+    # shoot_player
   handle_logic
   take_out_the_trash
   handle_output # vs render
@@ -183,9 +183,10 @@ end
 # def reflect_angle angle
 #   180 - angle
 # end
-  
-# "For what it’s worth, you could implement this behavior yourself — instead of calling “delete”, you could set obj.garbage = true. After your iteration, then you only need array.reject!(&:garbage) to clean up." - pvande
+
+# remove arrays 'n hashes all at once
 def take_out_the_trash
+# "For what it’s worth, you could implement this behavior yourself — instead of calling “delete”, you could set obj.garbage = true. After your iteration, then you only need array.reject!(&:garbage) to clean up." - pvande
   args.state.lasers.reject!(&:trash) # TODO: learn &:key
   # args.state.players.reject!(&:trash) # TODO: learn &:key
   # args.state.player = nil # will crash on output

@@ -1,5 +1,5 @@
 
-# common sane defaults accross
+# common sane defaults for my personal games
 module Defaults
 
 # def run_defaults
@@ -8,7 +8,6 @@ module Defaults
 
 # run on tick
 # won't run on first frame, in case of init
-# returns true/false
 def pause_because_unfocused?
   # from the docs
   if unfocused?
@@ -32,7 +31,7 @@ def pause_because_unfocused?
 end
 
 def unfocused?
-  # TODO: only good for desktop, platform conditionals?
+  # TODO: currently only good for desktop/keyboard
   # just return on production release for now
   return if args.gtk.production
 
