@@ -13,53 +13,57 @@ end
 
 # sources: started with twinstick sample
 def move_player
-  p = args.state.player
+  # p = args.state.player
+  args.state.players.each do |p|
 
-  s = p[:s] ||= 0.75 # speed
-  dx, dy = args.state.in.move_vector
-  
-  # TODO: use anchor_x/y and angle_anchor_x to turn sprite
-  p[:angle] = vector_to_angle(dx, dy) - 90
-  
-  # Take the weighted average of the old velocities and the desired velocities.
-  # Since move_directional_vector returns values between -1 and 1,
-  #   and we want to limit the speed to 7.5, we multiply dx and dy by 7.5*0.1 to get 0.75
-  p[:vx] = p[:vx] * 0.9 + dx * s
-  p[:vy] = p[:vy] * 0.9 + dy * s
+    s = p[:s] ||= 0.75 # speed
+    dx, dy = args.state.in.move_vector
 
-  # move
-  p.x += p[:vx]
-  p.y += p[:vy]
+    # TODO: use anchor_x/y and angle_anchor_x to turn sprite
+    p[:angle] = vector_to_angle(dx, dy) - 90
 
-  # bound to screen
-  p.x = p.x.clamp(0, 1201)
-  p.y = p.y.clamp(0, 640)
+    # Take the weighted average of the old velocities and the desired velocities.
+    # Since move_directional_vector returns values between -1 and 1,
+    #   and we want to limit the speed to 7.5, we multiply dx and dy by 7.5*0.1 to get 0.75
+    p[:vx] = p[:vx] * 0.9 + dx * s
+    p[:vy] = p[:vy] * 0.9 + dy * s
+
+    # move
+    p.x += p[:vx]
+    p.y += p[:vy]
+
+    # bound to screen
+    p.x = p.x.clamp(0, 1201)
+    p.y = p.y.clamp(0, 640)
+  end
 end
 
 
 def shoot_player
-  p = args.state.player
+  # p = args.state.player
+  args.state.players.each do |p|
 
-  p[:cooldown] -= 1
-  return if p[:cooldown] > 0
+    p[:cooldown] -= 1
+    return if p[:cooldown] > 0
   
-  cooldown_length = p[:cooldown_length] ||= 60 # 1/second
+    cooldown_length = p[:cooldown_length] ||= 60 # 1/second
   
-  dx, dy = args.state.in.shoot_vector
-  return if dx == 0 and dy == 0 # if no input, return early
+    dx, dy = args.state.in.shoot_vector
+    return if dx == 0 and dy == 0 # if no input, return early
 
-  # add a new bullet to the list of player bullets
-  w = p.w
-  h = p.h
+    # add a new bullet to the list of player bullets
+    w = p.w
+    h = p.h
 
-  x = p.x + w/2 * dx
-  y = p.y + h/2 * dy
-  make_laser ({x: x, y: y, dx: dx, dy: dy})
+    x = p.x + w/2 * dx
+    y = p.y + h/2 * dy
+    make_laser ({x: x, y: y, dx: dx, dy: dy})
   
-  # vs seperate sprite
-  # args.state.laser_heads << { x: x, y: y, w: 5, h: 5, path: 'sprites/circle/green.png', angle: vector_to_angle(dx, dy) }
+    # vs seperate sprite
+    # args.state.laser_heads << { x: x, y: y, w: 5, h: 5, path: 'sprites/circle/green.png', angle: vector_to_angle(dx, dy) }
 
-  p[:cooldown] = cooldown_length # reset the cooldown
+    p[:cooldown] = cooldown_length # reset the cooldown
+  end
 end
 
 # NOTE: called during reflect

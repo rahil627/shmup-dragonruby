@@ -54,15 +54,13 @@ def init
   args.state.players << make_player1
   args.state.players << make_player2
 
-  args.state.player = args.state.players[0] # TODO: TEMP, until refactored
-
 end
 
 def make_player1
   make_player x: 400,
            y: 320.randomize(:sign, :ratio),
            angle: 180,
-           path: 'sprites/circle/violet.png'
+           path: 'sprites/circle/violet.png' # TODO: this broke after refactoring out of make_laser
            # color: { r: 255, g: 90, b: 90 }
 end
 
@@ -101,7 +99,7 @@ def handle_output
   # output at the end
   args.outputs.background_color = [128, 0, 128]
 
-  args.outputs.sprites << [args.state.player, args.state.enemies, args.state.lasers ]
+  args.outputs.sprites << [args.state.players, args.state.lasers ]
   
   args.state.lasers.each do |l|
     args.outputs.sprites << l.head
@@ -128,15 +126,20 @@ end
 def check_laser_collisions
   # TODO: incomplete
   args.state.lasers.each do |l| # loop players or lasers?
-    # args.state.enemies.reject! do |enemy| # TODO: reject, but no conditional..?
-    # args.state.player_bullets.any? do |bullet| # TODO: LEARN: any, no conditional
-    # TODO: should center sprite anchors, especially player
-      # Check if enemy and player are within 20 pixels of each other (i.e. overlapping)
-    if 1000 > (l.x - args.state.player.x) ** 2 + (l.y - args.state.player.y) ** 2
-      # l.trash ||= true
-        # nahhh, keep laser
-      # kill player
-      args.state.player.trash ||= true
+    args.state.players.each do |p|
+
+      # TODO: dunno about any of this, it's from the sample
+      # args.state.enemies.reject! do |enemy| # TODO: reject, but no conditional..?
+      # args.state.player_bullets.any? do |bullet| # TODO: LEARN: any, no conditional
+      # TODO: should center sprite anchors, especially player
+        # Check if enemy and player are within 20 pixels of each other (i.e. overlapping)
+      if 1000 > (l.x - p.x ** 2 + (l.y - p.y) ** 2)
+        # l.trash ||= true
+          # nahhh, keep laser
+        # kill player
+        p.trash ||= true
+      end
+    
     end
   end
 end
@@ -195,8 +198,7 @@ end
 def take_out_the_trash
 # "For what it’s worth, you could implement this behavior yourself — instead of calling “delete”, you could set obj.garbage = true. After your iteration, then you only need array.reject!(&:garbage) to clean up." - pvande
   args.state.lasers.reject!(&:trash) # TODO: learn &:key
-  # args.state.players.reject!(&:trash) # TODO: learn &:key
-  # args.state.player = nil # will crash on output
+  args.state.players.reject!(&:trash)
 end
 
 def off_screen_or_on_the_edge_top_bottom? e
