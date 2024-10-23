@@ -2,7 +2,7 @@
 
 module Defaults
 
-def run_sane_defaults args
+def run_defaults args
   pause_when_unfocused args
 end
 
