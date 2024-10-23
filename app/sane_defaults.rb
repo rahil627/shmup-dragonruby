@@ -1,3 +1,7 @@
+
+
+module Defaults
+
 def run_sane_defaults args
   pause_when_unfocused args
 end
@@ -19,3 +23,7 @@ def pause_when_unfocused args
      $args.state.paused ||= false
   end
 end
+
+
+end # module
+

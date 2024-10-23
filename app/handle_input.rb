@@ -1,6 +1,7 @@
 
 
 # inputs don't change much, so put it in another file
+module Input
 
 # @param args [GTK::Args]
 def handle_input args
@@ -170,3 +171,7 @@ def get_shoot_vector args
   end
   [dx, dy]
 end
+
+
+end # module
+

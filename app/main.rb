@@ -2,6 +2,19 @@
 require "app/sane_defaults" # try require_relative
 require "app/handle_input"
 
+def tick args
+  $game ||= Game.new
+  $game.args = args
+  $game.tick args
+end
+
+
+class Game
+attr_gtk
+
+include Input
+include Defaults
+
 # main game loop
 # @param args [GTK::Args]
 def tick args
@@ -23,6 +36,7 @@ def reset args
 end
 
 def init args
+  puts "init"
   
   # just note some state data here
   # args.state.c = constants
@@ -224,4 +238,4 @@ def run_default_app args
 end
 
 
-  
+end # class game
