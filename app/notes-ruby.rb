@@ -118,7 +118,27 @@ screen ||= {x: 0, y: 0, h: 720, w: 1280} # hashes need keys
 
 
 
-  
+# everything in an object  
+**methods defined at the "top level" are defined as instance methods on Object, so they're inherited by everything.** The top-level context itself is a special instance of Object called "main"; by defining these methods with self., they become singleton methods of that top-level context (which is where DR looks for them), and they are not inherited by every other object in the system.
+
+The "surprising outcome" is specifically that Object ends up being the owner of these methods, the effect is that you can call add with an implicit receiver (as in within an object), but that Object.new.add(4, 6), and [].add(4, 6), and Module.add(4, 6), and $gtk.add(4, 6) all also work.
+
+def tick
+  # ...
+end
+  # if on the top-level context, will be inherited by *everything*
+  # use self to avoid this:
+
+def self.tick
+  # ...
+end
+
+
+
+
+
+
+
 
 # from getting started tutorial
    
