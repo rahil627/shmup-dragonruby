@@ -1,6 +1,7 @@
 
 
 # inputs don't change much, so put it in another file
+
 # @param args [GTK::Args]
 def handle_input args
   store_inputs args
@@ -62,8 +63,13 @@ end
 
 # NOTE: called during reflect
 def make_laser args, a
-  w = args.state.c.laser_width ||= 20
+  args.state.lasers << (laser args, a)
+end
 
+# returns entity hash
+def laser args, a
+  w = args.state.c.laser_width ||= 20
+  
   # TODO: can provide angle or vector or both?
   # angle = 0
   # if (a.angle) # TODO: a.angle or a['angle']?
@@ -75,8 +81,8 @@ def make_laser args, a
   #   dy = a.dy
   #   angle = vector_to_angle(a.dx, a.dy) - 90
   # end
-   
-  args.state.lasers << { # could avoid passing in args, but.. meh. it's neater this way!
+
+  {
     x:     a.x,
     y:     a.y,
     anchor_x: 0.5, # center of width of laser
