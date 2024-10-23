@@ -18,8 +18,6 @@ include Defaults
 # main game loop
 # @param args [GTK::Args]
 def tick
-  run_default_app # TEMP
-  
   run_defaults
   # return if args.state.paused # comment this out to remove pause, and instead can use the console to pause it TODO: breaks the game.. :/
   init if Kernel.tick_count.zero? # thanks to pvande
@@ -209,32 +207,6 @@ end
 def off_screen? e
   # if not Geometry.inside_rect?(l.rect, args.state.screen)
   e.x < 0 - e.w || e.y < 0 - e.h || e.x > 1280 + e.w || e.y > 720 + e.h
-end
-
-
-
-
-
-
-
-
-
-
-# temp
-
-def run_default_app
-  args.state.logo_rect ||= { x: 576,
-                             y: 200,
-                             w: 128,
-                             h: 101 }
-
-  args.outputs.labels  << { x: 640,
-                            y: 510,
-                            text: "Documentation is located under the ./docs/docs.txt directory. 150+ samples are located under the ./samples directory.",
-                            size_px: 20,
-                            anchor_x: 0.5,
-                            anchor_y: 0.5 }
-
 end
 
 
