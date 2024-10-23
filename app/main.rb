@@ -9,7 +9,7 @@ def tick args
   
   run_sane_defaults args
   # return if args.state.paused # comment this out to remove pause, and instead can use the console to pause it TODO: breaks the game.. :/
-  init_once args
+  init args if Kernel.tick_count.zero? # thanks to pvande
   handle_input args # TODO: module vs file?
     # move
     # shoot
@@ -18,11 +18,7 @@ def tick args
   handle_output args # vs render
 end
 
-def init_once args
-
-  return if args.state.c.init == 1
-  puts "init"
-  args.state.c.init = 1
+def init args
   
   # just note some state data here
   # args.state.c = constants
