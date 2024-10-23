@@ -2,12 +2,12 @@
 
 module Defaults
 
-def run_defaults args
-  pause_when_unfocused args
+def run_defaults
+  pause_when_unfocused
 end
 
 # from the docs
-def pause_when_unfocused args
+def pause_when_unfocused
   # if the keyboard doesn't have focus, and the game is in production mode, and it isn't the first tick
   if (!args.inputs.keyboard.has_focus && Kernel.tick_count != 0) # && args.gtk.production 
     args.outputs.background_color = [0, 0, 0]

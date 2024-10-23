@@ -5,7 +5,7 @@ require_relative "input"
 def tick args
   $game ||= Game.new
   $game.args = args
-  $game.tick args
+  $game.tick
 end
 
 
@@ -17,25 +17,25 @@ include Defaults
 
 # main game loop
 # @param args [GTK::Args]
-def tick args
-  run_default_app args # TEMP
+def tick
+  run_default_app # TEMP
   
-  run_defaults args
+  run_defaults
   # return if args.state.paused # comment this out to remove pause, and instead can use the console to pause it TODO: breaks the game.. :/
-  init args if Kernel.tick_count.zero? # thanks to pvande
-  handle_input args # TODO: module vs file?
+  init if Kernel.tick_count.zero? # thanks to pvande
+  handle_input # TODO: module vs file?
     # move
     # shoot
-  handle_logic args
-  take_out_the_trash args
-  handle_output args # vs render
+  handle_logic
+  take_out_the_trash
+  handle_output # vs render
 end
 
-def reset args
-  init args
+def reset
+  init
 end
 
-def init args
+def init
   puts "init"
   
   # just note some state data here
@@ -99,7 +99,7 @@ def make_player x:, y:, angle:, path:; #, color:;
 end
 
 
-def handle_output args
+def handle_output
     args.outputs.background_color = [128, 0, 128]
   # output at the end
     args.outputs.sprites << [args.state.player, args.state.enemies, args.state.lasers ] # TODO: args.state.lasers.head 
@@ -107,11 +107,11 @@ def handle_output args
   args.state.clear! if args.state.player[:health] < 0 # Reset the game if the player's health drops below zero
 end
 
-def handle_logic args
+def handle_logic
   # store_inputs
   # move_players
   # shoot_players
-  handle_lasers args
+  handle_lasers
     # extend
     # reflect
       # add new laser
@@ -120,7 +120,7 @@ def handle_logic args
     # do after reflect and shoot_players, 'cause they add new lasers
 end
 
-def check_laser_collisions args
+def check_laser_collisions
   # TODO: incomplete
   args.state.lasers.each do |l| # loop players or lasers?
     # args.state.enemies.reject! do |enemy| # TODO: reject, but no conditional..?
@@ -138,7 +138,7 @@ end
 
 
 # TODO: surely exists somewhere..
-def handle_lasers args
+def handle_lasers
   args.state.lasers.each do |l|
 
     s = args.state.c.laser_speed ||= 1 # speed, 1/720 per tick..?
@@ -176,7 +176,7 @@ def handle_lasers args
         dy *= -1
       end
       
-      make_laser args, {x: l.head.x, y: l.head.y, dx: dx, dy: dy}
+      make_laser ({x: l.head.x, y: l.head.y, dx: dx, dy: dy})
     end
 
   end
@@ -187,7 +187,7 @@ end
 # end
   
 # "For what it’s worth, you could implement this behavior yourself — instead of calling “delete”, you could set obj.garbage = true. After your iteration, then you only need array.reject!(&:garbage) to clean up." - pvande
-def take_out_the_trash args
+def take_out_the_trash
   args.state.lasers.reject!(&:trash) # TODO: learn &:key
   # args.state.players.reject!(&:trash) # TODO: learn &:key
   # args.state.player = nil # will crash on output
@@ -222,7 +222,7 @@ end
 
 # temp
 
-def run_default_app args
+def run_default_app
   args.state.logo_rect ||= { x: 576,
                              y: 200,
                              w: 128,

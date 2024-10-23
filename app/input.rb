@@ -4,15 +4,15 @@
 module Input
 
 # @param args [GTK::Args]
-def handle_input args
-  store_inputs args
+def handle_input
+  store_inputs
   
-  move_player args
-  shoot_player args
+  move_player
+  shoot_player
 end
 
 # sources: started with twinstick sample
-def move_player args
+def move_player
   p = args.state.player
 
   s = p[:s] ||= 0.75 # speed
@@ -37,7 +37,7 @@ def move_player args
 end
 
 
-def shoot_player args
+def shoot_player
   p = args.state.player
 
   p[:cooldown] -= 1
@@ -54,7 +54,7 @@ def shoot_player args
 
   x = p.x + w/2 * dx
   y = p.y + h/2 * dy
-  make_laser args, {x: x, y: y, dx: dx, dy: dy}
+  make_laser ({x: x, y: y, dx: dx, dy: dy})
   
   # vs seperate sprite
   # args.state.laser_heads << { x: x, y: y, w: 5, h: 5, path: 'sprites/circle/green.png', angle: vector_to_angle(dx, dy) }
@@ -63,12 +63,12 @@ def shoot_player args
 end
 
 # NOTE: called during reflect
-def make_laser args, a
-  args.state.lasers << (laser args, a)
+def make_laser a
+  args.state.lasers << (laser a)
 end
 
 # returns entity hash
-def laser args, a # hash with x, y, dx, dy
+def laser a # hash with x, y, dx, dy
   w = args.state.c.laser_width ||= 20
   
   # TODO: can provide angle or vector or both?
@@ -120,18 +120,18 @@ end
 
 # store all inputs into global state
 # also makes testing inputs easy
-def store_inputs args
+def store_inputs
   args.state.in.shoot_vector ||= [0, 0]
   args.state.in.move_vector ||= [0, 0]
-  args.state.in.shoot_vector = (get_shoot_vector args)
-  args.state.in.move_vector = (get_move_vector args)
+  args.state.in.shoot_vector = (get_shoot_vector)
+  args.state.in.move_vector = (get_move_vector)
 end
 
 # stores the directional vector of movement input into args.state.in.move_vector
 # TODO: should use left_right_perc and up_down_perc, which conveniently combines wasd/arrows/analog
 # TODO: multiple controllers, see $args.inputs.controllers
 # TEMP: use WASD
-def get_move_vector args
+def get_move_vector
 
   s = args.state.c.player_move_speed ||= 0.7071
   # dx = args.inputs.left_right_perc # handles wasd, arrows, analog sticks
@@ -153,7 +153,7 @@ end
 
 # stores the directional vector of shoot input into args.state.in.shoot_vector
 # TEMP: use arrow keys
-def get_shoot_vector args
+def get_shoot_vector
 
   s = args.state.c.player_shot_speed ||= 0.7071
   dx = args.inputs.left_right_directional # arrows, d-pad
