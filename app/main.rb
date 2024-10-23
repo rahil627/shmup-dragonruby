@@ -18,6 +18,10 @@ def tick args
   handle_output args # vs render
 end
 
+def reset args
+  init args
+end
+
 def init args
   
   # just note some state data here
