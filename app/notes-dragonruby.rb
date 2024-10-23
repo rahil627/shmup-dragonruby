@@ -30,7 +30,9 @@ args.state
   # use console to see what's inside interactively
     # type 'args', then press tab
       # same for gtk
-
+      
+args.outputs.debug
+  # output debug stuff here, probably doesn't go to production release
 
 # better to render via sprites instead of drawing api
   # - solids, borders, lines are debug objects and not meant for production, as they are drawn one pixel at a time..! lines can be used, but a sprite is still much better
