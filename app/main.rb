@@ -4,7 +4,7 @@ require_relative "input"
 
 def tick args
   $game ||= Game.new
-  $game.args = args
+  $game.args = args # for attr_gtk macro
   $game.tick
 end
 
@@ -18,10 +18,10 @@ include Defaults
 # main game loop
 # @param args [GTK::Args]
 def tick
-  run_defaults
-  # return if args.state.paused # comment this out to remove pause, and instead can use the console to pause it TODO: breaks the game.. :/
+  # run_defaults # from defaults module
   init if Kernel.tick_count.zero? # thanks to pvande
-  handle_input # TODO: module vs file?
+  return if pause_because_unfocused? # from defaults module
+  handle_input # from input module
     # move
     # shoot
   handle_logic
