@@ -1,22 +1,22 @@
 ---
 include:
-- "**/*.rb"
-# if pwd = dragonruby-windows-amd64/mygame
-- "app/*.rb"
-- "../../dragonruby-yard-doc/*.rb"
+  - "**/*.rb"
+  # if pwd = dragonruby-windows-amd64/mygame
+  - "app/*.rb"
+  - "../../dragonruby-yard-doc/*.rb"
 # if pwd = dragonruby-windows-amd64/
 # - "mygame/app/*.rb"
 # - "../dragonruby-yard-doc/*.rb"
 exclude:
-- spec/**/*
-- test/**/*
-- vendor/**/*
-- ".bundle/**/*"
+  - spec/**/*
+  - test/**/*
+  - vendor/**/*
+  - ".bundle/**/*"
 require: []
 domains: []
 reporters:
-- rubocop
-- require_not_found
+  - rubocop # TODO: annoying in sublime text with default rubocop settings, but seems fine in zed..??
+  - require_not_found
 formatter:
   rubocop:
     cops: safe
