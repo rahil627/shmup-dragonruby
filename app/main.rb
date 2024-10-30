@@ -9,7 +9,7 @@ def tick args
 end
 
 
-class Game
+class Game # NOTE: didn't indent
 attr_gtk
 
 include Input
@@ -77,22 +77,22 @@ def make_player x:, y:, angle:, path:; #, color:;
   # dead: false,
   # color: color,
   # created_at: Kernel.tick_count,
-  {x: x,
-   y: y,
-   w: 80,
-   h: 80,
-   path: path,
-   # a: 255,
-   angle: angle,
-   anchor_x: 0.5,
-   anchor_y: 0.5,
-   vx: 0,
-   vy: 0,
-   trash: false, # for garbage collection
-   # dead?
-   cooldown: 0,
-   health: 10,
-   score: 0 }
+ {x: x,
+  y: y,
+  w: 80,
+  h: 80,
+  path: path,
+  # a: 255,
+  angle: angle,
+  anchor_x: 0.5,
+  anchor_y: 0.5,
+  vx: 0,
+  vy: 0,
+  trash: false, # for garbage collection
+  # dead?
+  cooldown: 0,
+  health: 10,
+  score: 0 }
 end
 
 
